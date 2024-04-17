@@ -31,11 +31,18 @@ public class Utilisateur implements Serializable {
     private Role role;
     @Enumerated(EnumType.STRING)
     private Interet interet;
-    @ManyToMany(mappedBy = "utilisateurs")
-    private List<Club> clubs;
+    @OneToMany(mappedBy = "utilisateur")
+    private List<Forum> forums;
     @ManyToMany(mappedBy = "utilisateurs")
     private List<Evenement> evenements;
-
+    private List<Recrutement> recrutements;
+    @OneToMany(mappedBy = "utilisateur")
+    public List<Recrutement> getRecrutement(){
+        return recrutements;
+    }
+    public void setRecrutement(List<Recrutement> recrutements){
+        this.recrutements=recrutements;
+    }
     // ... getters and setters
 }
 

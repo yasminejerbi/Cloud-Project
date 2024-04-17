@@ -1,15 +1,13 @@
 package tn.esprit.pi.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,5 +20,7 @@ public class Categorie_sponsor implements Serializable {
     private long id;
     private String nomCategory;
     private String descriptionCategory;
+    @OneToMany(mappedBy = "categorieSponsor")
+    private List<Sponsors> sponsors;
 
 }

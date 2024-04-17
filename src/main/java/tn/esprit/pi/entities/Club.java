@@ -29,12 +29,19 @@ public class Club implements Serializable {
     private String adresse_mail;
     private Float cotisation;
     private String logo;
-    @ManyToMany
-    @JsonIgnore
-    private List<Utilisateur> utilisateurs;
     @ManyToMany(mappedBy = "clubs")
     private List<Evenement> evenements;
 
+    private List<Recrutement> recrutements;
 
-    // ... getters and setters
+    @OneToMany(mappedBy = "club")
+    public List<Recrutement> getRecrutement() {
+        return recrutements;
+    }
+
+    public void setRecrutement(List<Recrutement> recrutements) {
+        this.recrutements = recrutements;
+    }
+
+
 }

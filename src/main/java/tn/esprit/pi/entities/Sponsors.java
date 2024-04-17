@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Getter
@@ -26,5 +27,9 @@ public class Sponsors implements Serializable {
     private String numTel;
     @Enumerated(EnumType.STRING)
     private Sponsoring_type typeSponsoring;
+    @ManyToMany
+    private List<Evenement> evenements;
+    @ManyToOne
+    private Categorie_sponsor categorieSponsor;
 
 }
