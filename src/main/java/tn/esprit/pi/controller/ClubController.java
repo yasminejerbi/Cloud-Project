@@ -32,4 +32,9 @@ public class ClubController {
     public Club updateClub(@RequestBody  Club club){
         return iGestionClub.addorUpdateClub(club);
     }
+
+    @GetMapping ("/findClubByNomClub/{nomClub}")
+    public Club findClubByNomClub(@PathVariable("nomClub") String nomClub){
+        return iGestionClub.findClubByNomClub(nomClub);
+    }
 }

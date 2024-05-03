@@ -29,4 +29,9 @@ public class GestionClubsImpl implements IGestionClub{
     public Club retrieveClub(Long id) {
         return ClubRepository.findById(id).get();
     }
+
+    @Override
+    public Club findClubByNomClub(String nomClub) {
+        return ClubRepository.findClubByNomClub(nomClub);
+    }
 }

@@ -8,7 +8,7 @@ import tn.esprit.pi.services.IGestionUtilisateur;
 import java.util.List;
 
 @RestController
-
+@CrossOrigin("*")
 @RequestMapping("/utilisateur")
 public class UtilisateurController {
     @Autowired

@@ -9,4 +9,6 @@ public interface IGestionClub {
     public Club addorUpdateClub (Club club );
     public void removeClub (Long id);
     public Club retrieveClub (Long id);
+
+    Club findClubByNomClub(String nomClub);
 }

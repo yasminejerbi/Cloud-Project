@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -16,7 +17,6 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Recrutement implements Serializable {
     @EmbeddedId
     @GeneratedValue(strategy = GenerationType.IDENTITY)

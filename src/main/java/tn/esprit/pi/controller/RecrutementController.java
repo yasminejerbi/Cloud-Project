@@ -11,7 +11,7 @@ import tn.esprit.pi.services.IGestionRecrutement;
 
 import java.util.List;
 @RestController
-
+@CrossOrigin("*")
 @RequestMapping("/recrutement")
 public class RecrutementController {
     @Autowired

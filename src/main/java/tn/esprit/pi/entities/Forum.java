@@ -21,7 +21,6 @@ public class Forum implements Serializable {
     private long id;
 
     private String image;
-    private int like;
     private String title;
     private String description;
     @ManyToOne
