@@ -14,6 +14,18 @@ import { ComplaintsComponent } from './complaints/complaints.component';
 import { ContactComponent } from './contact/contact.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ProfileComponent } from './profile/profile.component';
+import { HttpClientModule } from '@angular/common/http';
+import {MatCardModule} from '@angular/material/card';
+import {MatDialogModule} from '@angular/material/dialog';
+import { RegisterComponent } from './register/register.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatInputModule} from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { CandidatesComponent } from './candidates/candidates.component';
+import {MatTableModule} from '@angular/material/table';
+import { UpdateCandidatesComponent } from './update-candidates/update-candidates.component';
+
 
 @NgModule({
   declarations: [
@@ -28,11 +40,22 @@ import { ProfileComponent } from './profile/profile.component';
     ComplaintsComponent,
     ContactComponent,
     NotFoundComponent,
-    ProfileComponent
+    ProfileComponent,
+    RegisterComponent,
+    CandidatesComponent,
+    UpdateCandidatesComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    MatCardModule,
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatInputModule,
+    FormsModule,
+    MatTableModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

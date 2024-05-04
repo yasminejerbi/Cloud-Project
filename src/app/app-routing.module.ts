@@ -10,7 +10,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ContactComponent } from './contact/contact.component';
-
+import { CandidatesComponent } from './candidates/candidates.component';
 const routes: Routes = [
 
   //route par defaut
@@ -19,6 +19,7 @@ const routes: Routes = [
   { path: 'forum', component : ForumComponent },
   { path: 'events', component : EventsComponent },
   { path: 'clubs', component : ClubsComponent },
+  { path: 'candidates', component : CandidatesComponent },
   { path: 'complaints', component : ComplaintsComponent },
   { path: 'login', component : LoginComponent },
   { path: 'profile', component : ProfileComponent },
