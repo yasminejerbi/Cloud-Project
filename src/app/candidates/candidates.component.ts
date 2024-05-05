@@ -6,6 +6,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { RegisterComponent } from '../register/register.component';
 import { UpdateCandidatesComponent } from '../update-candidates/update-candidates.component';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { SmsRequest } from '../model/SmsRequest';
 
 @Component({
   selector: 'app-candidates',
@@ -13,12 +15,47 @@ import { UpdateCandidatesComponent } from '../update-candidates/update-candidate
   styleUrls: ['./candidates.component.css']
 })
 export class CandidatesComponent {
-  constructor(public dialog: MatDialog, public candidatesService: CandidatesService, private router: Router/*,public service:UserService*/) { }
+  constructor(public dialog: MatDialog, public candidatesService: CandidatesService, 
+    private snackBar: MatSnackBar,
+    private router: Router/*,public service:UserService*/) { }
 
 deleteRecrutementById(id: RecrutementID) {
   this.candidatesService.deleteRecrutementById(id).subscribe(
     ()=>this.ngOnInit()
-  )}
+  )
+  const horizontalPosition: MatSnackBarHorizontalPosition = 'end';
+  const verticalPosition: MatSnackBarVerticalPosition = 'top';
+  this.snackBar.open('The request has been deleted successfully !', 'Close', {
+    duration: 3000,
+    horizontalPosition,
+    verticalPosition,
+    panelClass: ['success-snackbar']
+  })
+         
+ const smsRequest: SmsRequest = {
+  message: 'unfortunately you are not a match for this post',
+  phoneNumber: '+21650607702' // Replace with actual phone number
+};
+
+this.candidatesService.sendSms(smsRequest).subscribe(
+  (response) => {
+    console.log('SMS sent successfully:', response);
+     // Configure the snack bar position and style
+ const horizontalPosition: MatSnackBarHorizontalPosition = 'end';
+ const verticalPosition: MatSnackBarVerticalPosition = 'top';
+ this.snackBar.open('SMS sent successfully to the candidate', 'Close', {
+   duration: 3000,
+   horizontalPosition,
+   verticalPosition,
+   panelClass: ['success-snackbar']
+ });
+  },
+  (error) => {
+    console.error('Error sending SMS:', error);
+    // Handle errors appropriately, e.g., display an error message to the user
+  }
+);
+}
 
 
 modifierCandidate(id: RecrutementID) {

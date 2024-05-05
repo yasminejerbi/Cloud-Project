@@ -25,6 +25,10 @@ import { FormsModule } from '@angular/forms';
 import { CandidatesComponent } from './candidates/candidates.component';
 import {MatTableModule} from '@angular/material/table';
 import { UpdateCandidatesComponent } from './update-candidates/update-candidates.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -56,6 +60,10 @@ import { UpdateCandidatesComponent } from './update-candidates/update-candidates
     MatInputModule,
     FormsModule,
     MatTableModule,
+    MatSnackBarModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    NoopAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

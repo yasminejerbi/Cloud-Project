@@ -7,20 +7,25 @@ import { RecrutementID } from '../model/RecrutementID';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { User } from '../model/User';
 import { UserService } from '../services/user.service';
+import { MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
+  animations: []
 })
 export class RegisterComponent implements OnInit {
-listUser!:User[];
-userId!:any;
+  listUser!: User[];
+  userId!: any;
+
   constructor(
     private formBuilder: FormBuilder,
     private service: ClubService,
-    private serviceUser:UserService,
+    private serviceUser: UserService,
     private router: Router,
+    private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: any // Inject MAT_DIALOG_DATA to access data passed from the dialog
   ) {}
 
@@ -28,51 +33,53 @@ userId!:any;
     nomCandidat: new FormControl('', [Validators.required, Validators.minLength(3)]),
     poste: new FormControl('', [Validators.required, Validators.minLength(3)]),
     date: new FormControl('', [Validators.required]),
-    recrutementStatus: new FormControl('', [Validators.required])
+    recrutementStatus: new FormControl({ value: 'In Progress', disabled: true }, Validators.required),
   });
 
   persist() {
     if (this.RegisterForm.valid) {
       const formData = this.RegisterForm.value;
-      
-      // Retrieve club ID and user ID from the data object passed from the dialog
       const clubId = this.data.clubId;
-      //console.log(this.listUser);
-      for(let i=0;i<this.listUser.length;i++){
-        if(this.listUser[i].nomUtilisateur==this.RegisterForm.value.nomCandidat){
-          //console.log(this.listUser[i].id);
-           this.userId=this.listUser[i].id;}
+      
+      for (let i = 0; i < this.listUser.length; i++) {
+        if (this.listUser[i].nomUtilisateur == this.RegisterForm.value.nomCandidat) {
+          this.userId = this.listUser[i].id;
+        }
       }
-      //const userId = this.data.userId; // Assume userId is passed from the dialog
-      console.log(this.userId);
+
       const idCompose: RecrutementID = new RecrutementID();
       idCompose.idClub = clubId;
-      idCompose.idUtilisateur = this.userId; // Use the retrieved user ID
+      idCompose.idUtilisateur = this.userId;
 
       const RecData: any = {
         nomCandidat: formData.nomCandidat,
         poste: formData.poste,
         date: formData.date,
-        recrutementStatus: formData.recrutementStatus,
+        recrutementStatus: "progress",
         id: idCompose,
       };
 
-      console.log(this.RegisterForm.value);
       this.service.ajoutRecrutement(RecData).subscribe(
         (response) => {
-          console.log('recrutement ajoutée avec succès :', response);
-          // Optionally, provide feedback to the user that registration was successful
+          console.log('Recrutement ajoutée avec succès :', response);
+          // Configure the snack bar position and style
+          const horizontalPosition: MatSnackBarHorizontalPosition = 'start';
+          const verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+          this.snackBar.open('Your request has been sent successfully', 'Close', {
+            duration: 3000,
+            horizontalPosition,
+            verticalPosition,
+            panelClass: ['success-snackbar']
+          });
         },
         (error: HttpErrorResponse) => {
           console.error('Erreur lors de l\'ajout du recrutement :', error);
-          // Check the error status and handle it appropriately
+          // Display error notification
+          this.snackBar.open('This username does not exist', 'Close', { duration: 3000 });
           if (error.status === 400) {
-            // Bad request error, handle validation errors or other issues
-            // You can access error.error to get the detailed error message from the server
-            // Provide feedback to the user about the error
+            // Handle validation errors or other issues
           } else {
-            // Handle other types of errors (e.g., server down, network error)
-            // Provide appropriate feedback to the user
+            // Handle other types of errors
           }
         }
       );
@@ -81,7 +88,7 @@ userId!:any;
 
   ngOnInit() {
     this.serviceUser.getAll().subscribe(
-      { next: (data) => this.listUser=data,
+      { next: (data) => this.listUser = data,
         error: (err) => console.log(err),
         complete: () => console.log('done')
       });

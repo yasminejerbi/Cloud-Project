@@ -19,7 +19,6 @@ export class ClubsComponent {
 
 
 
-
   List: Club[] = [];
   //housingService: ClubService = inject(ClubService);
   filteredList: Club[] = [];
@@ -27,13 +26,7 @@ export class ClubsComponent {
 
 
 
-  constructor(public dialog: MatDialog, public clubService: ClubService, private router: Router/*,public service:UserService*/) { 
-    //this.housingLocationList = this.clubService.getAll();
-      this.clubService.getAll().subscribe(clubs => {
-      this.List = clubs;
-    });    
-    this.filteredList = this.List;
-  }
+  constructor(public dialog: MatDialog, public clubService: ClubService, private router: Router) { }
 
   // filterResults(text: string) {
   //   if (!text) {
@@ -79,7 +72,7 @@ export class ClubsComponent {
   
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      // You can handle any actions after the dialog is closed here
+
     });
   }
 

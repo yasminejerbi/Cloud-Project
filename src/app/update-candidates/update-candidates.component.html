@@ -23,7 +23,6 @@
           <option value="" disabled selected>Select status</option>
           <option value="progress">In Progress</option>
           <option value="accepted">Accepted</option>
-          <option value="refused">Refused</option>
         </select>
         <div *ngIf="RegisterForm.get('status')?.invalid && RegisterForm.get('status')?.touched" style="color: white;">
           <div *ngIf="RegisterForm.get('status')?.hasError('required')">Status is required</div>
