@@ -2017,6 +2017,7 @@ h3 {
 
 /* line 14, ../../Arafath/CL/December/236. Event-02/HTML/scss/_bradcam.scss */
 .bradcam_area {
+  background-image: url(../img/banner/banner.png);
   position: relative;
   z-index: 0;
 }

@@ -14,6 +14,22 @@ import { ComplaintsComponent } from './complaints/complaints.component';
 import { ContactComponent } from './contact/contact.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ProfileComponent } from './profile/profile.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { DetaileventComponent } from './front/event/detailevent/detailevent.component';
+import { AjoutEventComponent } from './front/event/back/ajout-event/ajout-event.component';
+import { EditEventComponent } from './front/event/back/edit-event/edit-event.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { Ng2OrderModule } from 'ng2-order-pipe';
+import { MapComponent } from './front/event/map/map.component';
+
 
 @NgModule({
   declarations: [
@@ -28,11 +44,28 @@ import { ProfileComponent } from './profile/profile.component';
     ComplaintsComponent,
     ContactComponent,
     NotFoundComponent,
-    ProfileComponent
+    ProfileComponent,
+    DetaileventComponent,
+    AjoutEventComponent,
+    EditEventComponent,
+    MapComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    NgbModule,
+    MatFormFieldModule, 
+    MatInputModule, 
+    MatDatepickerModule,
+    MatPaginatorModule,
+    NgxPaginationModule,
+    Ng2SearchPipeModule,
+    Ng2OrderModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

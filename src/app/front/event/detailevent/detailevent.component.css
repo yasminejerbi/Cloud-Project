@@ -1,0 +1,5 @@
+.bradcam_area {
+    background-image: url(../detailevent/event.png);
+    position: relative;
+    z-index: 0;
+  }

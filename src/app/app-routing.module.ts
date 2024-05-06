@@ -10,6 +10,9 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ContactComponent } from './contact/contact.component';
+import { DetaileventComponent } from './front/event/detailevent/detailevent.component';
+import { AjoutEventComponent } from './front/event/back/ajout-event/ajout-event.component';
+import { EditEventComponent } from './front/event/back/edit-event/edit-event.component';
 
 const routes: Routes = [
 
@@ -17,12 +20,16 @@ const routes: Routes = [
   {path:'' , redirectTo: 'home', pathMatch: 'full'},
   { path: 'home', component : HomeComponent },
   { path: 'forum', component : ForumComponent },
-  { path: 'events', component : EventsComponent },
+  {path: 'event', component : EventsComponent},
   { path: 'clubs', component : ClubsComponent },
   { path: 'complaints', component : ComplaintsComponent },
   { path: 'login', component : LoginComponent },
   { path: 'profile', component : ProfileComponent },
   { path: 'contact', component : ContactComponent },
+  { path: 'event/:id',component : DetaileventComponent},
+  { path: 'eventAdd',component : AjoutEventComponent},
+  { path: 'eventMod/:id',component : EditEventComponent},
+
 
     //route parametré
 /*

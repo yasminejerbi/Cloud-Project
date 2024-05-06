@@ -1,5 +1,5 @@
  <header>
- <div class="header-area " style="background-color: black;">
+ <div class="header-area " style="background-color: black;" [ngStyle]="{'background-color': isEventsRoute() ? 'transparent' : 'black'}">
       <div id="sticky-header" class="main-header-area">
           <div class="container">
               <div class="header_bottom_border">
@@ -20,7 +20,7 @@
                                       
                                       <li><a >pages <i class="ti-angle-down"></i></a>
                                           <ul class="submenu">
-                                              <li><a  class="nav-link" routerLink="/events">Events</a></li>
+                                              <li><a  class="nav-link" routerLink="/event" >Events</a></li>
                                               <li><a  class="nav-link" routerLink="/clubs">Clubs</a></li>
                                               <li><a  class="nav-link" routerLink="/complaints">Complaints</a></li>
                                           </ul>
@@ -49,25 +49,24 @@
   </div>
 
 <!-- JS here -->
-<script src="js/vendor/modernizr-3.5.0.min.js"></script>
-<script src="js/vendor/jquery-1.12.4.min.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/owl.carousel.min.js"></script>
-<script src="js/isotope.pkgd.min.js"></script>
-<script src="js/ajax-form.js"></script>
-<script src="js/waypoints.min.js"></script>
-<script src="js/jquery.counterup.min.js"></script>
-<script src="js/imagesloaded.pkgd.min.js"></script>
-<script src="js/scrollIt.js"></script>
-<script src="js/jquery.scrollUp.min.js"></script>
-<script src="js/wow.min.js"></script>
-<script src="js/gijgo.min.js"></script>
-<script src="js/nice-select.min.js"></script>
-<script src="js/jquery.slicknav.min.js"></script>
-<script src="js/jquery.magnific-popup.min.js"></script>
-<script src="js/tilt.jquery.js"></script>
-<script src="js/plugins.js"></script>
+<script src="/src/assets/js/modernizr-3.5.0.min.js"></script>
+<script src="/src/assets/js/jquery-1.12.4.min.js"></script>
+<script src="/src/assets/js/popper.min.js"></script>
+<script src="/src/assets/js/bootstrap.min.js"></script>
+<script src="/src/assets/js/owl.carousel.min.js"></script>
+<script src="/src/assets/js/isotope.pkgd.min.js"></script>
+<script src="/src/assets/js/ajax-form.js"></script>
+<script src="/src/assets/js/waypoints.min.js"></script>
+<script src="/src/assets/js/jquery.counterup.min.js"></script>
+<script src="/src/assets/js/imagesloaded.pkgd.min.js"></script>
+<script src="/src/assets/js/scrollIt.js"></script>
+<script src="/src/assets/js/jquery.scrollUp.min.js"></script>
+<script src="/src/assets/js/wow.min.js"></script>
+<script src="/src/assets/js/gijgo.min.js"></script>
+<script src="/src/assets/js/nice-select.min.js"></script>
+<script src="/src/assets/js/jquery.slicknav.min.js"></script>
+<script src="/src/assets/js/tilt.jquery.js"></script>
+<script src="/src/assets/js/plugins.js"></script>
 
 
 
@@ -79,5 +78,5 @@
 <script src="js/mail-script.js"></script>
 
 
-<script src="js/main.js"></script>
+<script src="/src/assets/js/main.js"></script>
 
