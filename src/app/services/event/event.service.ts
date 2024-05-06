@@ -12,7 +12,7 @@ import { User } from 'src/app/model/User';
 export class EventService {
   private listurl ='http://localhost:9000/pi/event/getAll';
   private apiSponsorsaffiche='http://localhost:9000/pi/sponsors/getAll';
-  private apiClubaffiche='http://localhost:9000/pi/club/getAll';
+  private apiUseraffiche='http://localhost:9000/pi/utilisateur/getAll';
 
   private deleteEventUrl = "http://localhost:9000/pi/event/deleteID/";
   private apiUrl = 'http://localhost:9000/pi/event';
@@ -20,6 +20,11 @@ export class EventService {
   listevents():Observable<events[]>{
     
     return this.http.get<events[]>(this.listurl);
+    
+   }
+   listUsers():Observable<User[]>{
+    
+    return this.http.get<User[]>(this.apiUseraffiche);
     
    }
    getUserById(id:number){

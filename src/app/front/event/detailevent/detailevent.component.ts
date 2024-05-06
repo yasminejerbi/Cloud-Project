@@ -14,22 +14,31 @@ export class DetaileventComponent {
   id!: number;
   eventSearched!: any;
   user:any;
+  placesAvailable:number = 0;
   isUserAssigned = false;
-  constructor(private eventService: EventService, private Act : ActivatedRoute,private modalService: NgbModal) { };
-  idUser: number =1
-  placesAvailable!:number
+  constructor(private eventService: EventService, private Act : ActivatedRoute) { };
+  idUser: number =3
+  Users:User[] = [];
   loadEvent(): void {
   this.eventService.getEvent(this.id).subscribe((event: any) => {
     this.eventSearched = event;
-    
+    this.eventSearched.numPlaces = event.numPlaces;
   });
   this.eventService.getUserById(this.idUser).subscribe((user: any) => {
     this.user = user;
     this.checkIfUserAssigned();
   });
+  this.eventService.listUsers().subscribe((users: any) => {
+    this.Users = users;
+    this.onCount();
+
+  })
+
+  
 }
 /*-----aSSingn user----*/
 onAssign() {
+  
   if (!this.isUserAssigned) {
     const userIds = this.user.evenements.map((event: { id: any }) => event.id);
 
@@ -43,16 +52,18 @@ onAssign() {
             console.log("User assigned");
             this.isUserAssigned = true;
             this.toast(TYPE.SUCCESS,"User is assigned successfully")
-            
+            this.onCount()  
+            this.ngOnInit();
+
           },
           error => console.error("Error assigning user to event:", error)
         );
-        
     }
   } else {
     this.toast(TYPE.WARNING,"User is already in this event")
     console.log("User is already assigned to this event");
   }
+  
   
 }
   checkIfUserAssigned() {
@@ -79,12 +90,28 @@ onAssign() {
         lines.push(text.slice(i, i + lineLength));
     }
     return lines;
+    
+}
+/**count places availables */
+onCount() {
+  this.placesAvailable = 0; // Reset placesAvailable before counting
+  for (let i = 0; i < this.Users.length; i++) {
+    for (let event of this.Users[i].evenements || []) {
+      if (event.id === this.eventSearched.id) {
+        this.placesAvailable++;
+         // Exit the loop if the event is found
+         break;
+      }
+      
+    
+  }
+  // Update numPlaces of eventSearched
+}
+this.eventSearched.numPlaces = this.eventSearched.numPlaces - this.placesAvailable;
 }
   ngOnInit(){
     this.id = this.Act.snapshot.params['id'];
     this.loadEvent();
-    
-    
 
   }
   
