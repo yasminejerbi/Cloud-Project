@@ -2,23 +2,17 @@ package tn.esprit.pi.services;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
+
 import tn.esprit.pi.entities.Evenement;
-import tn.esprit.pi.entities.Sponsors;
 import tn.esprit.pi.repository.IEvenementRepository;
 import tn.esprit.pi.repository.ISponsorsRepository;
 
+import java.time.LocalDate;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,6 +27,22 @@ public class GestionEvenementImpl implements IGestionEvenement{
     @Autowired
     ISponsorsRepository sponsorsRepository;
 
+    @Scheduled(cron = "*/6 * * * * *")
+    @Override
+    public void deleteExpiredEvents() {
+        List<Evenement> events = retrieveAllEvenement();
+
+
+        LocalDate now = LocalDate.now();
+        for (Evenement event : events) {
+            log.warn(String.valueOf(event.getDateFin().isBefore(now)));
+            if (event.getDateFin().isBefore(now)) {
+
+                removeEvenement(event.getId());
+                log.info("event deleted");
+            }
+        }
+    }
     @Override
     public void removeSponsorsFromEventbyId(Long idEvent,Long idSponsors){
         Evenement evenement=evenementRepository.findById(idEvent).get();

@@ -1,5 +1,6 @@
 package tn.esprit.pi.services;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.pi.entities.Evenement;
 
@@ -12,4 +13,5 @@ public interface IGestionEvenement {
     public void removeEvenement (Long idEvenement);
     public Evenement retrieveEvenement (Long idEvenement);
     public void removeSponsorsFromEventbyId(Long idEvent, Long idSponsors);
+    public void deleteExpiredEvents();
 }
