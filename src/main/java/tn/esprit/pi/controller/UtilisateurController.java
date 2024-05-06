@@ -22,7 +22,7 @@ public class UtilisateurController {
         return iGestionUtilisateur.addorUpdateUtilisateur(utilisateur);
     }
     @GetMapping("/getUtilisateurId/{id}")
-    public Utilisateur getUtilisateurId(@PathVariable("id") long id){
+    public Utilisateur getUtilisateurId(@PathVariable("id") Long id){
 
         return iGestionUtilisateur.retrieveUtilisateur(id);
     }

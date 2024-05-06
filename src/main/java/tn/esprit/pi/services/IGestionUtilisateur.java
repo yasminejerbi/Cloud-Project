@@ -9,4 +9,5 @@ public interface IGestionUtilisateur {
     public Utilisateur addorUpdateUtilisateur (Utilisateur utilisateur );
     public void removeUtilisateur (Long idUtilisateur);
     public Utilisateur retrieveUtilisateur (Long idUtilisateur);
+    public Utilisateur assignUtilisateurToEvenement(Long numUtilisateur, Long numEvenement);
 }

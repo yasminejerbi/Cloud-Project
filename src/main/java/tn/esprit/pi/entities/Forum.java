@@ -20,8 +20,7 @@ public class Forum implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String image;
-    private String title;
+    private String nomForum;
     private String description;
     @ManyToOne
     @JsonIgnore

@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import java.io.Serializable;
 import java.util.List;
@@ -34,9 +36,10 @@ public class Utilisateur implements Serializable {
     @OneToMany(mappedBy = "utilisateur")
     private List<Forum> forums;
     @ManyToMany(mappedBy = "utilisateurs")
+    @Cascade(value = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Evenement> evenements;
     private List<Recrutement> recrutements;
-    @OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "utilisateur")
     public List<Recrutement> getRecrutement(){
         return recrutements;
     }

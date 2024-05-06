@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,11 +32,16 @@ public class Club implements Serializable {
     @ManyToMany(mappedBy = "clubs")
     private List<Evenement> evenements;
 
+    private List<Recrutement> recrutements;
 
     @OneToMany(mappedBy = "club")
-    private List<Recrutement> recrutements = new ArrayList<>();
+    public List<Recrutement> getRecrutement() {
+        return recrutements;
+    }
 
-  /*  @ElementCollection
-    private List<String> membres = new ArrayList<>();*/
+    public void setRecrutement(List<Recrutement> recrutements) {
+        this.recrutements = recrutements;
+    }
+
 
 }
