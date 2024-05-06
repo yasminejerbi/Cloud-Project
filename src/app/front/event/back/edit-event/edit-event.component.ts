@@ -17,7 +17,13 @@ export class EditEventComponent {
   sponsorsGRP: sponsors[] = []
   imgSrc: string = '/assets/img/';
   selectedImg : any;
-
+  date = new Date();
+  currentDay:any;
+  currentMonth:any;
+  currentYear:any;
+  todayDate:any;
+  minFinDate:any;
+  MaxdebutDate:any;
 
   RegisterForm=new FormGroup({
   
@@ -42,15 +48,6 @@ export class EditEventComponent {
           
         
     }
-  
-  /*loadEvent(): void {
-    
-  this.eventService.getEvent(this.id).subscribe((event: any) => {
-    this.eventToEdit = event;
-    this.imgSrc = this.imgSrc+this.eventToEdit.photo;
-  });
-  
-}*/
 loadEvent(): void {
   this.eventService.getEvent(this.id).subscribe((event: any) => {
     this.eventToEdit = event;
@@ -67,7 +64,7 @@ loadEvent(): void {
       eventType: this.eventToEdit.eventType.toString(),
     });
   });
-}
+}/**load image */
 OnEditSelectedFile(event:any) {
 
   if(event.target.files && event.target.files[0]){
@@ -81,6 +78,7 @@ OnEditSelectedFile(event:any) {
     
   }
 }
+/**submit the form */
 submitEdit(): void {
   
   if(this.RegisterForm.valid) {
@@ -95,7 +93,9 @@ submitEdit(): void {
 
   })
   this.show(TYPE.SUCCESS,"Event Edited successfully","Success");  
+
 this.router.navigate(['/event']);
+this.ngOnInit();
 
 }
 else {
@@ -113,10 +113,26 @@ show(typeIcon = TYPE.SUCCESS,message:string,title:string) {
     confirmButtonText: 'Ok'
   });
 }
+/**date validation */
+dateValidation(){
 
+  this.currentYear = this.date.getUTCFullYear();
+  this.currentMonth = this.date.getUTCMonth() + 1;
+  this.currentDay = this.date.getUTCDate();
+  if(this.currentDay<10){
+    this.currentDay = "0"+this.currentDay;
+  }
+  if(this.currentMonth<10){
+    this.currentMonth = "0"+this.currentMonth;
+  }
+  this.todayDate = this.currentYear +"-"+ this.currentMonth +"-"+ this.currentDay
+  this.MaxdebutDate = this.RegisterForm.get('dateFin')?.value 
+  this.minFinDate = this.RegisterForm.get('dateDebut')?.value 
+}
   ngOnInit(){
     this.id = this.Act.snapshot.params['id'];
     this.loadSponsors();
     this.loadEvent();
+    this.dateValidation();
   }
 }

@@ -35,7 +35,7 @@
       </div>
       <div class="form-group">
         <label for="dateDebut">Start Date <span>(Specify your Start date)</span></label>
-        <input type="date" id="dateDebut" name="dateDebut" placeholder="Enter your Start date" formControlName="dateDebut" required [(ngModel)]="eventToEdit.dateDebut">
+        <input type="date" id="dateDebut" name="dateDebut" placeholder="Enter your Start date" formControlName="dateDebut" required [(ngModel)]="eventToEdit.dateDebut" [min]="todayDate" (change)="dateValidation()" [max]="MaxdebutDate">
         <div *ngIf="RegisterForm.get('dateDebut')?.invalid && RegisterForm.get('dateDebut')?.touched">
           <div *ngIf="RegisterForm.get('dateDebut')?.hasError('required')">Start date is required</div>
           
@@ -43,7 +43,7 @@
       </div>
       <div class="form-group">
         <label for="dateFin">End date <span>(Specify your End date)</span></label>
-        <input type="date" id="dateFin" name="dateFin" placeholder="Enter your End date" formControlName="dateFin" required [(ngModel)]="eventToEdit.dateFin">
+        <input type="date" id="dateFin" name="dateFin" placeholder="Enter your End date" formControlName="dateFin" required [(ngModel)]="eventToEdit.dateFin" (change)="dateValidation()" [min]="minFinDate || todayDate">
         <div *ngIf="RegisterForm.get('dateFin')?.invalid && RegisterForm.get('dateFin')?.touched">
           <div *ngIf="RegisterForm.get('dateFin')?.hasError('required')">end Date is required</div>
           

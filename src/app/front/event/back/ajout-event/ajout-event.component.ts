@@ -20,6 +20,13 @@ export class AjoutEventComponent {
   constructor(public eventService: EventService) {}
   imgSrc!: string ;
   selectedImg : any;
+  date = new Date();
+  currentDay:any;
+  currentMonth:any;
+  currentYear:any;
+  todayDate:any;
+  minFinDate:any;
+  MaxdebutDate:any;
   RegisterForm=new FormGroup({
   
     nom : new FormControl('', [Validators.required]),
@@ -35,25 +42,7 @@ export class AjoutEventComponent {
 
 })
 
-/*private dateRangeValidator(): ValidatorFn {
-  return (): {[key: string]: any} | null => {
-    let invalid = false;
-    const from = this.RegisterForm && this.RegisterForm.get("dateDebut")?.value ;
-    const to = this.RegisterForm && this.RegisterForm.get("dateFin")?.value;
-    if (from && to) {
-      invalid = new Date(to).valueOf() > new Date(from).valueOf();
-    }
-    return invalid ? { invalidRange: { from, to } } : null;
-  };
-}*/
-
-/*loadSponsors():void {
-  
-this.eventService.listClub().subscribe(clubs => {
-        this.ClubGRP = clubs});
-      
-    
-}*/
+/**image load */
 OnSelectedFile(event:any) {
   if(event.target.files && event.target.files[0]){
   
@@ -66,7 +55,7 @@ OnSelectedFile(event:any) {
     
   }
 }
-
+/**submit form */
 submit():void {
     const formData = this.RegisterForm.value;
     if (this.RegisterForm.valid) {
@@ -107,8 +96,26 @@ show(typeIcon = TYPE.SUCCESS,message:string,title:string) {
     confirmButtonText: 'Ok'
   });
 }
+/**date validation */
+dateValidation(){
+
+  this.currentYear = this.date.getUTCFullYear();
+  this.currentMonth = this.date.getUTCMonth() + 1;
+  this.currentDay = this.date.getUTCDate();
+  if(this.currentDay<10){
+    this.currentDay = "0"+this.currentDay;
+  }
+  if(this.currentMonth<10){
+    this.currentMonth = "0"+this.currentMonth;
+  }
+  this.todayDate = this.currentYear +"-"+ this.currentMonth +"-"+ this.currentDay
+  this.MaxdebutDate = this.RegisterForm.get('dateFin')?.value 
+  this.minFinDate = this.RegisterForm.get('dateDebut')?.value 
+}
+
 
 ngOnInit() {
+  this.dateValidation()
   
 }
 
