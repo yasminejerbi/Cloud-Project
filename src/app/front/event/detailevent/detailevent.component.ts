@@ -72,6 +72,14 @@ onAssign() {
       title: message
     })
   }
+  /**trimming */
+  splitTextIntoLines(text: string, lineLength: number): string[] {
+    const lines = [];
+    for (let i = 0; i < text.length; i += lineLength) {
+        lines.push(text.slice(i, i + lineLength));
+    }
+    return lines;
+}
   ngOnInit(){
     this.id = this.Act.snapshot.params['id'];
     this.loadEvent();

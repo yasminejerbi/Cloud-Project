@@ -25,9 +25,9 @@
               "src/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              
               "src/assets/style/magnific-popup.css",
               "src/assets/style/font-awesome.min.css",
               "src/assets/style/themify-icons.css",
@@ -36,10 +36,37 @@
               "src/assets/style/animate.css",
               "src/assets/style/flaticon.css",
               "src/assets/style/slicknav.css"
-            
-
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/ajax-form.js",
+              "src/assets/js/bootstrap.min.js",
+              "src/assets/js/contact.js",
+              "src/assets/js/gijgo.min.js",
+              "src/assets/js/imagesloaded.pkgd.min.js",
+              "src/assets/js/isotope.pkgd.min.js",
+              "src/assets/js/jquery.ajaxchimp.min.js",
+              "src/assets/js/jquery.counterup.min.js",
+              "src/assets/js/jquery.form.js",
+              
+              "src/assets/js/jquery.scrollUp.min.js",
+              "src/assets/js/jquery.slicknav.min.js",
+              "src/assets/js/jquery.validate.min.js",
+              "src/assets/js/mail-script.js",
+              "src/assets/js/main.js",
+              "src/assets/js/nice-select.min.js",
+              "src/assets/js/plugins.js",
+              "src/assets/js/popper.min.js",
+              "src/assets/js/scrollIt.js",
+              "src/assets/js/slick.min.js",
+              "src/assets/js/tilt.jquery.js",
+              "src/assets/js/waypoints.min.js",
+              "src/assets/js/wow.min.js",
+              "src/assets/js/modernizr-3.5.0.min.js",
+              "src/assets/js/jquery-1.12.4.min.js"
+
+
+
+            ]
           },
           "configurations": {
             "production": {
@@ -99,6 +126,7 @@
               "src/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css"
             ],
             "scripts": []
