@@ -1,8 +1,13 @@
 export enum Sponsoring_type {
-    negatif,
-    positif,
-    neutre
-    // Ajoutez plus de catégories ici si nécessaire
+    financier,
+    materiel
+}
+
+export enum MaterielType {
+    Laptop,
+    Data_show,
+    Tables_chairs,
+    no_material
 }
 export class Sponsor {
     constructor(
@@ -18,6 +23,8 @@ export class Sponsor {
         public  montant?:number,
         public  email?:String,
         public  numTel?:String,
+        public typeMateriel?: MaterielType,
+        public image?:String,
    
 
 

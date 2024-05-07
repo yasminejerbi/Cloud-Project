@@ -14,10 +14,12 @@ import { AddSponsorComponent } from './Sponsor/add-sponsor/add-sponsor.component
 import { ListSponsorComponent } from './Sponsor/list-sponsor/list-sponsor.component';
 import { UpdateSponsorComponent } from './Sponsor/update-sponsor/update-sponsor.component';
 
+
 const routes: Routes = [
 
   //route par defaut
   {path:'' , redirectTo: 'home', pathMatch: 'full'},
+
   { path: 'home', component : HomeComponent },
   { path: 'forum', component : ForumComponent },
   { path: 'events', component : EventsComponent },

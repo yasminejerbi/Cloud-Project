@@ -46,5 +46,8 @@ export class ListSponsorComponent {
   openResponseForm(sponsor: Sponsor): void {
     this.router.navigate(['response', sponsor.id], { state: { sponsorDetails: sponsor } });
 }
+navigateToAddSponsor() {
+  this.router.navigate(['/addsponsor']);
+}
 
 }

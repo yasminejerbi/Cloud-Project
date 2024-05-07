@@ -1,32 +1,41 @@
-<div class="container">
-   
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Type de Sponsoring</th>
-          <th>Nom du Sponsor</th>
-          <th>Durée du Sponsoring</th>
-          <th>Montant</th>
-          <th>Email</th>
-          <th>Numéro de Téléphone</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let sponsor of sponsors" class="table-default">
-          <td>{{ sponsor.typeSponsoring }}</td>
-          <td>{{ sponsor.nomSponsor }}</td>
-          <td>{{ sponsor.dureeSponsoring }}</td>
-          <td>{{ sponsor.montant }}</td>
-          <td>{{ sponsor.email }}</td>
-          <td>{{ sponsor.numTel }}</td>
-          <td>
-            <button class="btn btn-danger" (click)="sponsor.id && deleteSponsor(sponsor.id)">Supprimer</button>
-            <button class="btn btn-primary" (click)="sponsor.id && modifierSponsor(sponsor.id)">Modifier</button>
-            
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title> Event HTML-5 Template </title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="site.webmanifest">
+
+
+</head>
+<body>
+
+
+  <section class="pricing-card-area section-padding2">
+    <button class="btn btn-primary" (click)="navigateToAddSponsor()">Add Sponsor</button>
+    <div class="container" >
+        <div class="row" style="width: 100%;" >
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-10" *ngFor="let sponsor of sponsors">
+                <div class="single-card text-center mb-30">
+                    <div class="card-top">
+                      <img [src]="'../../assets/img/'+sponsor.image">
+                    </div>
+                    <div class="card-bottom">
+                        <ul>
+                            <li><h4>Sponsor Name :</h4><h6> {{ sponsor.nomSponsor }}</h6></li>
+                            <li><h4>Sponsorship duration :</h4> <h6>{{ sponsor.dureeSponsoring }}</h6></li>
+                            <li><h4>Sponsor Type :</h4> <h6>{{ sponsor.typeSponsoring }}</h6></li>
+                            <li *ngIf="sponsor.typeSponsoring?.toString() == 'financier'"><h4>Amount :</h4><h6>{{ sponsor.montant }}</h6></li>
+                            <li *ngIf="sponsor.typeSponsoring?.toString() == 'materiel'"><h4>Material Type :</h4><h6>{{ sponsor.typeMateriel }}</h6></li>
+                            <li><h4>Email Address :</h4><h6>{{ sponsor.email }}</h6></li>
+                            <li><h4>Phone Number :</h4><h6>{{ sponsor.numTel }}</h6></li>
+                        </ul>
+                        <a class="black-btn" (click)="sponsor.id && modifierSponsor(sponsor.id)" style="margin-right: 10px; cursor: pointer;">Modify</a>
+                        <a class="black-btn" (click)="sponsor.id && deleteSponsor(sponsor.id)" style="cursor: pointer;">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+</body>

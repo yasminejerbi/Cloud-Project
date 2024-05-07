@@ -20,6 +20,7 @@ import { UpdateSponsorComponent } from './Sponsor/update-sponsor/update-sponsor.
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +37,8 @@ import { HttpClientModule } from '@angular/common/http';
     ProfileComponent,
     AddSponsorComponent,
     ListSponsorComponent,
-    UpdateSponsorComponent
+    UpdateSponsorComponent,
+
   ],
   imports: [
     BrowserModule,

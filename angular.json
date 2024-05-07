@@ -35,7 +35,21 @@
               "src/assets/style/nice-select.css",
               "src/assets/style/animate.css",
               "src/assets/style/flaticon.css",
-              "src/assets/style/slicknav.css"
+              "src/assets/style/slicknav.css",
+              "src/assets/style/sponsors/animate.min.css",
+              "src/assets/style/sponsors/flaticon.css",
+              "src/assets/style/sponsors/fontawesome-all.min.css",
+              "src/assets/style/sponsors/gijgo.css",
+              "src/assets/style/sponsors/magnific-popup.css",
+              "src/assets/style/sponsors/main.css",
+              "src/assets/style/sponsors/nice-select.css",
+              "src/assets/style/sponsors/owl.carousel.min.css",
+              "src/assets/style/sponsors/price_rangs.css",
+              "src/assets/style/sponsors/responsive.css",
+              "src/assets/style/sponsors/slick.css",
+              "src/assets/style/sponsors/slicknav.css",
+              "src/assets/style/sponsors/style.css",
+              "src/assets/style/sponsors/themify-icons.css"
             
 
             ],

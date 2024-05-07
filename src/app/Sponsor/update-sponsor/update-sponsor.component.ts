@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Sponsor } from 'src/app/model/Sponsor';
-import { SponsorService } from 'src/app/services/Sponsor.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { SponsorService } from 'src/app/services/Sponsor.service';
+import { Sponsors } from 'src/app/model/Sponsors';
 
 @Component({
   selector: 'app-update-sponsor',
@@ -11,104 +10,98 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
   styleUrls: ['./update-sponsor.component.css']
 })
 export class UpdateSponsorComponent implements OnInit {
-  id: any;
-  sponsorForm: FormGroup;
-  formSubmitted = false;
+  id!: number;
+  sponsorForm!: FormGroup;
+  submitted = false;
+  selectedFile: File | undefined;
 
-  constructor(private sponsorService: SponsorService, private router: Router, private route: ActivatedRoute, private fb: FormBuilder) {
-    let formControls = {
-      nomSponsor: new FormControl('', [
-        Validators.required,
-        Validators.minLength(4),
-      ]),
-      typeSponsoring: new FormControl('', [
-        Validators.required,
-      ]),
-      dureeSponsoring: new FormControl('', [
-        Validators.required,
-      ]),
-      montant: new FormControl('', [
-        Validators.required,
-      ]),
-      email: new FormControl('', [
-        Validators.required,
-        Validators.email,
-      ]),
-      numTel: new FormControl('', [
-        Validators.required,
-      ])
-    };
-    this.sponsorForm = this.fb.group(formControls);
+  constructor(
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private sponsorService: SponsorService
+  ) { }
+
+  ngOnInit(): void {
+    this.id = this.route.snapshot.params['id'];
+    this.createForm();
+    this.getSponsor();
   }
 
-  ngOnInit() {
-    let id = this.route.snapshot.params['id'];
-    
-    this.id = id;
-   
-    this.sponsorService.getSponsor(this.id).subscribe((result: Sponsor) => {
-      let sponsor = result;
-      this.sponsorForm.patchValue({
-        nomSponsor: sponsor.nomSponsor,
-        typeSponsoring: sponsor.typeSponsoring,
-        dureeSponsoring: sponsor.dureeSponsoring,
-        montant: sponsor.montant,
-        email: sponsor.email,
-        numTel: sponsor.numTel
-      });
+  createForm() {
+    this.sponsorForm = this.formBuilder.group({
+      // Existing form controls
+      nomSponsor: ['', Validators.required],
+      typeSponsoring: ['', Validators.required],
+      dureeSponsoring: ['', Validators.required],
+      montant: ['', Validators.required],
+      typeMateriel: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      numTel: ['', Validators.required],
+      image: [''] // New form control for image
     });
   }
 
-  get nomSponsor() { return this.sponsorForm.get('nomSponsor'); }
-  get typeSponsoring() { return this.sponsorForm.get('typeSponsoring'); }
-  get dureeSponsoring() { return this.sponsorForm.get('dureeSponsoring'); }
-  get montant() { return this.sponsorForm.get('montant'); }
-  get email() { return this.sponsorForm.get('email'); }
-  get numTel() { return this.sponsorForm.get('numTel'); }
+  get f() { return this.sponsorForm.controls; }
+
+  getSponsor() {
+    this.sponsorService.getSponsor(this.id)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.sponsorForm.patchValue(data);
+        },
+        error => {
+          console.log(error);
+        });
+  }
 
   validateField(field: string) {
-    return (
-      this.sponsorForm.get(field)?.invalid &&
-      (this.sponsorForm.get(field)?.touched || this.formSubmitted)
-    );
+    return this.submitted && this.sponsorForm.get(field)?.errors;
   }
 
   getErrorMessage(field: string) {
     if (this.sponsorForm.get(field)?.hasError('required')) {
       return 'Ce champ est obligatoire';
     }
-    if (this.sponsorForm.get(field)?.hasError('minlength')) {
-      return 'Ce champ doit contenir au moins 4 caractères';
-    }
-    if (this.sponsorForm.get(field)?.hasError('email')) {
-      return 'Adresse email invalide';
+    if (field === 'email' && this.sponsorForm.get(field)?.hasError('email')) {
+      return 'Email invalide';
     }
     return '';
   }
 
-  modifierSponsor() {
-    this.formSubmitted = true;
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    this.selectedFile = file;
+    this.sponsorForm.patchValue({
+      image: file
+    });
+  }
+
+  updateSponsor() {
+    this.submitted = true;
     if (this.sponsorForm.invalid) {
       return;
     }
-    let data = this.sponsorForm.value;
-    let sponsor = new Sponsor(
+
+    this.sponsorService.updateSponsor(
       this.id,
-      data.nomSponsor,
-      data.typeSponsoring,
-      data.dureeSponsoring,
-      data.montant,
-      data.email,
-      data.numTel
-    );
-    this.sponsorService.modifierSponsor(sponsor).subscribe(
-      () => {
-        console.log('Sponsor updated successfully');
-        this.router.navigate(['listSponsor']);
+      this.f['nomSponsor'].value,
+      this.f['dureeSponsoring'].value,
+      this.f['typeSponsoring'].value,
+      this.f['montant'].value,
+      this.f['numTel'].value,
+      this.f['email'].value,
+      this.f['typeMateriel'].value,
+      this.selectedFile 
+    ).subscribe(
+      response => {
+        console.log(response);
+        this.submitted = true;
+        this.router.navigate(['/listSponsor']);
       },
-      (error: HttpErrorResponse) => {
-        console.error('Error updating sponsor:', error);
-      }
-    );
+      error => {
+        console.log(error);
+      });
   }
 }

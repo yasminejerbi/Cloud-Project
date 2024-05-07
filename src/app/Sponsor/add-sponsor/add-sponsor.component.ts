@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SponsorService } from 'src/app/services/Sponsor.service'; 
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
 
-import { Sponsor, Sponsoring_type } from 'src/app/model/Sponsor';
-import { SponsorService } from 'src/app/services/Sponsor.service';
 
 @Component({
   selector: 'app-add-sponsor',
@@ -12,67 +10,102 @@ import { SponsorService } from 'src/app/services/Sponsor.service';
   styleUrls: ['./add-sponsor.component.css']
 })
 export class AddSponsorComponent {
-  constructor(private formBuilder: FormBuilder, private service: SponsorService, private router:Router) { }
-  listUser!: Sponsor[];
-  length:number=0;
-   i:number=0;
-   sponsorForm = new FormGroup({
-    nomSponsor: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    typeSponsoring: new FormControl('', [Validators.required,]),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    numTel: new FormControl('', [Validators.required, Validators.pattern('[0-9]{8}')]),
-    dureeSponsoring: new FormControl('', [
-      Validators.required,
-      Validators.pattern('[0-9]+$'),
-      Validators.min(30)
-    ]),
-    
-    montant: new FormControl('', [
-      Validators.required,
-      Validators.pattern('[0-9]+$'),
-      Validators.min(100)
-    ]),
-    
-  });
+  sponsorForm: FormGroup;
 
-  persistUser() {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private sponsorService: SponsorService
+  ) {
+    this.sponsorForm = this.fb.group({
+      nomSponsor: ['', Validators.required],
+
+      dureeSponsoring: ['', Validators.required],
+
+      typeSponsoring: ['', Validators.required],
+
+      dynamicFields: this.fb.group({  
+        montant: ['', Validators.required],
+        typeMateriel: ['', Validators.required]
+      }),
+
+      numTel: ['', Validators.required],
+
+      email: ['', [Validators.required, Validators.email]],
+
+      image: [null]
+      
+    });
+    this.onTypeSponsoringChange();
+  }
+
+  onSubmit() {
     if (this.sponsorForm.valid) {
       const formData = this.sponsorForm.value;
-      const SponsorData: any = {
-        nomSponsor: formData.nomSponsor,
-        typeSponsoring: formData.typeSponsoring,
-        email: formData.email,
-        numTel: formData.numTel,
-        dureeSponsoring: formData.dureeSponsoring,
-        montant:formData.montant,
-        
-      };
-
-      this.service.ajouterSponsor(SponsorData).subscribe(
-        (response) => {
-
-          this.router.navigate(['home'])
-
-          console.log('Sponsor ajouté avec succée :', response);
-          // Optionally, provide feedback to the user that registration was successful
+  
+      // Set montant to 0 if typeSponsoring is 'materiel'
+      if (formData.typeSponsoring === 'materiel') {
+        formData.dynamicFields.montant = 0;
+      }
+  
+      console.log('Form Data:', formData);
+      if (formData.typeSponsoring === 'financier') {
+        // Set default value for typeMateriel
+        formData.dynamicFields.typeMateriel = 'no_material';
+      }
+      console.log('Form Data after modification:', formData);
+  
+      console.log('Montant:', formData.dynamicFields.montant);
+  
+      this.sponsorService.addSponsor(
+        formData.nomSponsor,
+        formData.dureeSponsoring,
+        formData.typeSponsoring,
+        formData.dynamicFields.montant,
+        formData.numTel,
+        formData.email,
+        formData.dynamicFields.typeMateriel, // Correctly access typeMateriel
+        formData.image
+      ).subscribe(
+        response => {
+          console.log('Sponsor added successfully:', response);
+          this.router.navigate(['/listSponsor']);
         },
-        (error: HttpErrorResponse) => {
-          console.error('Erreur lors de l\'ajout du sponsor :', error);
-          // Check the error status and handle it appropriately
-          if (error.status === 400) {
-            // Bad request error, handle validation errors or other issues
-            // You can access error.error to get the detailed error message from the server
-            // Provide feedback to the user about the error
-          } else {
-            // Handle other types of errors (e.g., server down, network error)
-            // Provide appropriate feedback to the user
-          }
+        error => {
+          console.error('Error adding sponsor:', error);
         }
       );
     }
   }
+  
+  
+  
 
-  ngOnInit(): void {
+  onFileChange(event: Event) {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files.length > 0) {
+      this.sponsorForm.patchValue({
+        image: fileInput.files[0]
+      });
+    }
   }
 
+  onTypeSponsoringChange() {
+    const dynamicFieldsGroup = this.sponsorForm.get('dynamicFields');
+    const typeSponsoringControl = this.sponsorForm.get('typeSponsoring');
+    
+    if (dynamicFieldsGroup && typeSponsoringControl) {
+      typeSponsoringControl.valueChanges.subscribe(value => {
+        if (dynamicFieldsGroup && dynamicFieldsGroup.get('montant') && dynamicFieldsGroup.get('typeMateriel')) {
+          if (value === 'financier') {
+            dynamicFieldsGroup.get('montant')?.enable(); // Access nested form control
+            dynamicFieldsGroup.get('typeMateriel')?.disable(); // Access nested form control
+          } else if (value === 'materiel') {
+            dynamicFieldsGroup.get('montant')?.disable(); // Access nested form control
+            dynamicFieldsGroup.get('typeMateriel')?.enable(); // Access nested form control
+          }
+        }
+      });
+    }
+  }
 }
