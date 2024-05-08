@@ -1,0 +1,27 @@
+<div class="container ">
+  <div class="search-container">
+    <label class="d-flex">
+      <input type="search" placeholder="Search" class="form-control" [(ngModel)]="searchKeyword" (input)="searchReclamations()" />
+    </label>
+  </div>
+  <main>
+    <div class="content-area">
+      <div class="row">
+        <div class="col-md-4" *ngFor="let reclamation of reclamations">
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="card-title">{{ reclamation.name }}</h5>
+              <p class="card-text">{{ reclamation.descriptionReclamation }}</p>
+              <p class="card-text">Categorie: {{ reclamation.categorie }}</p>
+              <p class="card-text">Date de Soumission: {{ reclamation.dateSoumission }}</p>
+              <div class="d-flex justify-content-between">
+                <i data-feather="trash-2" class="btn btn-danger" (click)="reclamation.id && deleteReclamation(reclamation.id)">Supprimer</i>
+                <i data-feather="edit" class="btn btn-primary" (click)="reclamation.id && modifierreclamation(reclamation.id)">Modifier</i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
