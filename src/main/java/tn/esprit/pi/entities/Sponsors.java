@@ -45,8 +45,7 @@ public class Sponsors implements Serializable {
 
 
 
-    /*@ManyToMany
-    private List<Evenement> evenements;*/
+
 
 
 }

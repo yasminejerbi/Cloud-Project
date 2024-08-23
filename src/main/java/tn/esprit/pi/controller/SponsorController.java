@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-//@CrossOrigin("*")
+
 @RequestMapping("/sponsors")
 
 public class SponsorController {
@@ -53,10 +53,6 @@ public class SponsorController {
             if (image != null && !image.isEmpty()) {
                 imageUrl = saveImage(image);
             }
-
-            /*Club c = clubRepository.findById(idClub).get();
-            List<Club> clubs = new ArrayList<>();*/
-            // Create a new Post object using the provided constructor
             Sponsors sponsors = new Sponsors(nomSponsor,imageUrl,dureeSponsoring,montant,email,numTel,typeSponsoring,typeMateriel);
 
             iGestionSponsors.addorUpdateSponsors(sponsors);
@@ -80,7 +76,6 @@ public class SponsorController {
         }
     }
 
-    // This method saves the image to your desired location
     private String saveImage(MultipartFile image) throws Exception {
         try {
             String fileName = image.getOriginalFilename();
@@ -89,10 +84,10 @@ public class SponsorController {
             Path imagePath = Paths.get(IMAGE_UPLOAD_DIR + fileName);
             Files.write(imagePath, imageData);
 
-            return fileName; // Return only the file name
+            return fileName;
         } catch (Exception e) {
-            e.printStackTrace(); // Log the exception
-            throw e; // Rethrow the exception to propagate it
+            e.printStackTrace();
+            throw e;
         }
     }
 
@@ -113,7 +108,7 @@ public class SponsorController {
                 imageUrl = saveImage(image);
             }
 
-            // Check if sponsorId is provided, if so, update existing sponsor, otherwise, create new
+
             Sponsors sponsor;
             if (sponsorId != null) {
                 sponsor = iGestionSponsors.retrieveSponsors(sponsorId);
@@ -124,7 +119,7 @@ public class SponsorController {
                                     "message", "Sponsor not found."
                             ));
                 }
-                // Update sponsor details
+
                 sponsor.setNomSponsor(nomSponsor);
                 sponsor.setDureeSponsoring(dureeSponsoring);
                 sponsor.setTypeSponsoring(typeSponsoring);
@@ -132,9 +127,9 @@ public class SponsorController {
                 sponsor.setNumTel(numTel);
                 sponsor.setEmail(email);
                 sponsor.setTypeMateriel(typeMateriel);
-                sponsor.setImage(imageUrl); // Update image URL if provided
+                sponsor.setImage(imageUrl);
             } else {
-                // Create new sponsor
+
                 sponsor = new Sponsors(nomSponsor, imageUrl, dureeSponsoring, montant, email, numTel, typeSponsoring, typeMateriel);
             }
 
@@ -173,9 +168,6 @@ public class SponsorController {
     }
 
 
-    /*@PutMapping ("/updateSponsors")
-    public Sponsors updateSponsors(@RequestBody  Sponsors sponsors){
-        return iGestionSponsors.addorUpdateSponsors(sponsors);
-    }*/
+
 
 }
