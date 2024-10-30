@@ -1,9 +1,7 @@
 package tn.esprit.pi.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,5 +21,7 @@ public class Logistique implements Serializable {
     private String nomLogistique;
     private int quantity;
     private Float prix;
-
+    @ManyToOne
+    @JsonIgnore
+    private Evenement evenement;
 }

@@ -1,9 +1,7 @@
 package tn.esprit.pi.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,5 +22,8 @@ public class Forum implements Serializable {
 
     private String nomForum;
     private String description;
+    @ManyToOne
+    @JsonIgnore
+    private Utilisateur utilisateur;
 
 }

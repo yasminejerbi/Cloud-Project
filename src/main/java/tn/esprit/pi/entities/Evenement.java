@@ -35,4 +35,9 @@ public class Evenement implements Serializable {
     private List<Club> clubs;
     @OneToMany(mappedBy = "evenement")
     private List<Feedback>feedbacks;
+    @ManyToMany(mappedBy ="evenements")
+    private List<Sponsors> sponsors;
+    @OneToMany(mappedBy = "evenement")
+    private List<Logistique> logistiques;
+
 }
